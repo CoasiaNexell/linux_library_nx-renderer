@@ -70,8 +70,8 @@ static int dp_screen_probe(struct dp_screen *screen)
 	DP_DBG("encoder type:%d, id:%d, crtc_id:%d\n",
 			encoder->type, encoder->id, encoder->crtc_id);
 	screen->encoders = encoder;
-	drmModeFreeConnector(con);
 	drmModeFreeEncoder(enc);
+	drmModeFreeConnector(con);
 
 	return 1;
 }
@@ -104,9 +104,10 @@ void dp_screen_free(struct dp_screen *screen)
 	if (screen) {
 		if (screen->encoders)
 			free(screen->encoders);
+		free(screen);
 	}
-	free(screen);
 }
+
 
 int dp_screen_set(struct dp_screen *screen, struct dp_crtc *crtc,
 		   struct dp_framebuffer *fb)

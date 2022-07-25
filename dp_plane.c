@@ -84,7 +84,12 @@ struct dp_plane *dp_plane_create(struct dp_device *device, uint32_t id)
 
 void dp_plane_free(struct dp_plane *plane)
 {
-	free(plane);
+	if( plane )
+	{
+		if( plane->formats )
+			free( plane->formats );
+		free(plane);
+	}
 }
 
 int dp_plane_set(struct dp_plane *plane, struct dp_framebuffer *fb,

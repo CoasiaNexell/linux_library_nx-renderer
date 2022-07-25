@@ -227,7 +227,11 @@ void dp_device_close(struct dp_device *device)
 	free(device->crtcs);
 
 	for (i = 0; i < device->num_screens; i++)
+	{
+		if( device->screens[i]->name )
+			free(device->screens[i]->name);
 		dp_screen_free(device->screens[i]);
+	}
 
 	free(device->screens);
 
